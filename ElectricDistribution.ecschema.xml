@@ -383,6 +383,20 @@
         <ECProperty propertyName="StructureName"         typeName="string"              displayLabel="Structure Name"        description="UPM PoleIdentity.structure_name"/>
         <ECProperty propertyName="PoleOwner"             typeName="string"              displayLabel="Pole Owner"            description="Owner of record; not in UPM — sourced from GIS"/>
         <ECProperty propertyName="JointUse"              typeName="boolean"             displayLabel="Joint Use"             description="Whether joint use attachments are present"/>
+        <ECProperty propertyName="FramingFaultCount"     typeName="int"                 displayLabel="Framing Fault Count"   description="Count of framing fault findings from validate_framing; UPM framing.framing_fault_findings[]"/>
+        <!-- Verdict summary — mirrored from AnalyticalModel for BIC Data Visualization coloring without joining to the analytical model -->
+        <ECProperty propertyName="LoadingStatus"         typeName="string"              displayLabel="Loading Status"        description="PASS / FAIL / MARGINAL; from verdicts.loading.status"/>
+        <ECProperty propertyName="UtilizationRatio"      typeName="double"              displayLabel="Utilization Ratio"     description="Governing utilization ratio (0–1+); from verdicts.loading.percent_used / 100"/>
+        <ECProperty propertyName="ClearanceStatus"       typeName="string"              displayLabel="Clearance Status"      description="PASS / FAIL / MARGINAL; from verdicts.clearance.status"/>
+        <ECProperty propertyName="ClearanceViolationCount" typeName="int"               displayLabel="Clearance Violation Count" description="Total clearance violations; from verdicts.clearance.violation_count"/>
+        <!-- Component-level safety factors — exposes per-component SF breakdown for BIC coloring by failure mode -->
+        <ECProperty propertyName="BendingSafetyFactor"   typeName="double"              displayLabel="Bending Safety Factor"    description="Computed bending SF; from verdicts.loading.bending_sf"/>
+        <ECProperty propertyName="BendingRequiredSF"     typeName="double"              displayLabel="Bending Required SF"      description="Code-required bending SF; from verdicts.loading.bending_req_sf"/>
+        <ECProperty propertyName="BucklingSafetyFactor"  typeName="double"              displayLabel="Buckling Safety Factor"   description="Computed buckling SF; from verdicts.loading.buckling_sf"/>
+        <ECProperty propertyName="BucklingRequiredSF"    typeName="double"              displayLabel="Buckling Required SF"     description="Code-required buckling SF; from verdicts.loading.buckling_req_sf"/>
+        <ECProperty propertyName="FoundationSafetyFactor" typeName="double"             displayLabel="Foundation Safety Factor" description="Computed foundation overturning SF; from verdicts.loading.foundation_sf"/>
+        <ECProperty propertyName="FoundationRequiredSF"  typeName="double"              displayLabel="Foundation Required SF"   description="Code-required foundation SF; from verdicts.loading.foundation_req_sf"/>
+        <ECProperty propertyName="GoverningComponent"    typeName="string"              displayLabel="Governing Component"      description="Failure mode with lowest SF margin; from verdicts.loading.worst_component"/>
     </ECEntityClass>
 
     <ECEntityClass typeName="PoleAttachment" modifier="Abstract" displayLabel="Pole Attachment"
@@ -451,6 +465,7 @@
         <BaseClass>bis:PhysicalElement</BaseClass>
         <BaseClass>dsys:IDistributionFlowElement</BaseClass>
         <ECProperty propertyName="WireId"               typeName="string"             displayLabel="Wire ID"               description="Wire label (e.g. Phase A, Neutral N); UPM Span.wire_id"/>
+        <ECProperty propertyName="FeederId"             typeName="string"             displayLabel="Feeder ID"             description="Feeder/project scope prefix used for conductor cross-pole stitching (e.g. project_line_one); separates the namespace prefix from WireId"/>
         <ECProperty propertyName="WireCode"             typeName="string"             displayLabel="Wire Code"             description="Conductor size label (e.g. ACSR 336, 2/0 ACSR); UPM Span.size"/>
         <ECProperty propertyName="ConductorUsageGroup"  typeName="ConductorUsageGroup" displayLabel="Conductor Usage Group" description="UPM Attachment.attachment_type or span metadata"/>
         <ECProperty propertyName="NominalVoltage"       typeName="double" kindOfQuantity="AECU:ELECTRIC_POTENTIAL" displayLabel="Nominal Voltage"       description="UPM Attachment.voltage_v"/>
